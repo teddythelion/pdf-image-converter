@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 fun HomeScreen(
     onPdfToImagesClick: () -> Unit,
     onImagesToPdfClick: () -> Unit,
+    onTextToPdfClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
     Scaffold(
@@ -43,6 +44,12 @@ fun HomeScreen(
                 onClick = onImagesToPdfClick,
                 modifier = Modifier.fillMaxWidth().height(64.dp)
             ) { Text("Images → PDF") }
+            Spacer(Modifier.height(16.dp))
+
+            Button(
+                onClick = onTextToPdfClick,
+                modifier = Modifier.fillMaxWidth().height(64.dp)
+            ) { Text("Text → PDF") }
         }
     }
 }

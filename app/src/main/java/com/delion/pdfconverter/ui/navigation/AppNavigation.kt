@@ -8,12 +8,13 @@ import com.delion.pdfconverter.ui.screens.HomeScreen
 import com.delion.pdfconverter.ui.screens.ImagesToPdfScreen
 import com.delion.pdfconverter.ui.screens.PdfToImagesScreen
 import com.delion.pdfconverter.ui.screens.SettingsScreen
-
+import com.delion.pdfconverter.ui.screens.TextToPdfScreen
 object Routes {
     const val HOME = "home"
     const val PDF_TO_IMAGES = "pdf_to_images"
     const val IMAGES_TO_PDF = "images_to_pdf"
     const val SETTINGS = "settings"
+    const val TEXT_TO_PDF = "text_to_pdf"
 }
 
 @Composable
@@ -25,6 +26,7 @@ fun AppNavigation() {
             HomeScreen(
                 onPdfToImagesClick = { navController.navigate(Routes.PDF_TO_IMAGES) },
                 onImagesToPdfClick = { navController.navigate(Routes.IMAGES_TO_PDF) },
+                onTextToPdfClick = { navController.navigate(Routes.TEXT_TO_PDF) },
                 onSettingsClick = { navController.navigate(Routes.SETTINGS) }
             )
         }
@@ -36,6 +38,9 @@ fun AppNavigation() {
         }
         composable(Routes.SETTINGS) {
             SettingsScreen(onBack = { navController.popBackStack() })
+        }
+        composable(Routes.TEXT_TO_PDF) {
+            TextToPdfScreen(onBack = { navController.popBackStack() })
         }
     }
 }
