@@ -12,16 +12,12 @@ import androidx.compose.ui.unit.dp
 fun HomeScreen(
     onPdfToImagesClick: () -> Unit,
     onImagesToPdfClick: () -> Unit,
-    onTextToPdfClick: () -> Unit,
-    onSettingsClick: () -> Unit
+    onTextToPdfClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("PDF & Image Converter") },
-                actions = {
-                    TextButton(onClick = onSettingsClick) { Text("Settings") }
-                }
+                title = { Text("PDF & Image Converter") }
             )
         }
     ) { padding ->
