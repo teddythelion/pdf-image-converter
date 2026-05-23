@@ -5,10 +5,14 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.delion.pdfconverter.conversion.ConversionProgress
 import com.delion.pdfconverter.conversion.TextToPdfConverter
@@ -42,8 +46,12 @@ fun TextToPdfScreen(onBack: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Text → PDF") },
-                navigationIcon = { TextButton(onClick = onBack) { Text("Back") } }
+                title = { Text("Text to PDF", fontWeight = FontWeight.SemiBold) },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "Back")
+                    }
+                }
             )
         }
     ) { padding ->
@@ -51,31 +59,33 @@ fun TextToPdfScreen(onBack: () -> Unit) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(24.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(horizontal = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            Button(
-                onClick = { pickText.launch("text/*") },
-                enabled = !isConverting,
-                modifier = Modifier.fillMaxWidth()
-            ) { Text(if (selectedText == null) "Select Text File" else "Change File") }
+            Spacer(Modifier.height(8.dp))
 
-            selectedTextName?.let {
-                Text("Selected: $it", style = MaterialTheme.typography.bodyMedium)
-            }
+            FilePickerCard(
+                label = if (selectedText == null) "Select text file" else (selectedTextName ?: "File selected"),
+                helper = if (selectedText == null) "Tap to browse" else "Tap to change",
+                enabled = !isConverting,
+                onClick = { pickText.launch("text/*") }
+            )
 
             OutlinedTextField(
                 value = outputName,
                 onValueChange = { outputName = it },
-                label = { Text("Output filename") },
+                label = { Text("Filename") },
                 singleLine = true,
                 enabled = !isConverting,
+                shape = RoundedCornerShape(12.dp),
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Button(
+            PrimaryButton(
+                text = "Convert to PDF",
+                enabled = selectedText != null && !isConverting,
                 onClick = {
-                    val uri = selectedText ?: return@Button
+                    val uri = selectedText ?: return@PrimaryButton
                     scope.launch {
                         isConverting = true
                         errorMessage = null
@@ -93,38 +103,24 @@ fun TextToPdfScreen(onBack: () -> Unit) {
                             progress = null
                         }
                     }
-                },
-                enabled = selectedText != null && !isConverting,
-                modifier = Modifier.fillMaxWidth()
-            ) { Text("Convert to PDF") }
+                }
+            )
 
-            if (isConverting) {
-                progress?.let { p ->
-                    LinearProgressIndicator(
-                        progress = { p.currentPage.toFloat() / p.totalPages },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Text("Page ${p.currentPage} of ${p.totalPages}")
-                } ?: LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-            }
-
-            errorMessage?.let {
-                Text(it, color = MaterialTheme.colorScheme.error)
-            }
+            if (isConverting) ProgressBlock(progress, "Page")
+            errorMessage?.let { ErrorBlock(it) }
 
             resultUri?.let { uri ->
-                Text("Saved to Downloads.", style = MaterialTheme.typography.bodyMedium)
-                Button(
-                    onClick = {
+                SuccessBlock(
+                    message = "PDF saved to Downloads",
+                    onShare = {
                         val intent = Intent(Intent.ACTION_SEND).apply {
                             type = "application/pdf"
                             putExtra(Intent.EXTRA_STREAM, uri)
                             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         }
                         context.startActivity(Intent.createChooser(intent, "Share PDF"))
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                ) { Text("Share") }
+                    }
+                )
             }
         }
     }

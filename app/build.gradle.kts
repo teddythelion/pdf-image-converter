@@ -58,4 +58,5 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.reorderable)
+    implementation(libs.androidx.compose.material.icons.extended)
 }
