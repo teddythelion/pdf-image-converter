@@ -59,4 +59,5 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.reorderable)
     implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.play.services.ads)
 }

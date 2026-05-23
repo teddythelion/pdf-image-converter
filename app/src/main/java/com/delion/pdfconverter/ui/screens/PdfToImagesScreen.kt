@@ -24,7 +24,7 @@ import com.delion.pdfconverter.conversion.PdfToImageConverter
 import com.delion.pdfconverter.conversion.Quality
 import com.delion.pdfconverter.ui.theme.SuccessGreen
 import kotlinx.coroutines.launch
-
+import com.delion.pdfconverter.ui.components.AdBanner
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PdfToImagesScreen(onBack: () -> Unit) {
@@ -157,6 +157,7 @@ fun PdfToImagesScreen(onBack: () -> Unit) {
                     }
                 )
             }
+            AdBanner()
         }
     }
 }

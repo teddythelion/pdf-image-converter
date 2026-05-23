@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.delion.pdfconverter.conversion.ConversionProgress
 import com.delion.pdfconverter.conversion.TextToPdfConverter
 import kotlinx.coroutines.launch
-
+import com.delion.pdfconverter.ui.components.AdBanner
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextToPdfScreen(onBack: () -> Unit) {
@@ -122,6 +122,7 @@ fun TextToPdfScreen(onBack: () -> Unit) {
                     }
                 )
             }
+            AdBanner()
         }
     }
 }

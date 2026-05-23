@@ -25,7 +25,7 @@ import com.delion.pdfconverter.conversion.ImageToPdfConverter
 import kotlinx.coroutines.launch
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
-
+import com.delion.pdfconverter.ui.components.AdBanner
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ImagesToPdfScreen(onBack: () -> Unit) {
@@ -187,6 +187,7 @@ fun ImagesToPdfScreen(onBack: () -> Unit) {
                     }
                 )
             }
+            AdBanner()
         }
     }
 }
