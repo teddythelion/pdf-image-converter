@@ -12,7 +12,7 @@ import android.util.Log
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.LoadAdError
 // Test banner ad unit. Replace with your real ID before publishing.
-private const val TEST_BANNER_AD_UNIT_ID = "ca-app-pub-3940256099942544/6300978111"
+private const val BANNER_AD_UNIT_ID = "ca-app-pub-9665203597204603/1011640439"
 
 @Composable
 fun AdBanner(modifier: Modifier = Modifier) {
@@ -21,7 +21,7 @@ fun AdBanner(modifier: Modifier = Modifier) {
         factory = { context ->
             AdView(context).apply {
                 setAdSize(AdSize.BANNER)
-                adUnitId = TEST_BANNER_AD_UNIT_ID
+                adUnitId = BANNER_AD_UNIT_ID
                 layoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
